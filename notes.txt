@@ -1,3 +1,7 @@
 Scraping with password
 
+In Python
 https://stackoverflow.com/questions/8316818/login-to-website-using-python/8316989#8316989
+
+in Java
+https://www.mkyong.com/java/how-to-automate-login-a-website-java-example/
