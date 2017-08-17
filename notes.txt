@@ -1,0 +1,3 @@
+Scraping with password
+
+https://stackoverflow.com/questions/8316818/login-to-website-using-python/8316989#8316989
