@@ -37,6 +37,8 @@ public class Scraper {
     }
 
     private static void getInformationFor(String cookie, String reviewerName) throws URISyntaxException, IOException {
+        System.setProperty("https.proxyHost", "127.0.0.1");
+        System.setProperty("https.proxyPort", "9050");
         URIBuilder uriBuilder = new URIBuilder("https://www.theeroticreview.com/reviews/searchbyreviewerResults.asp");
         uriBuilder.addParameter("MemberName", reviewerName);
         Document doc = Jsoup.connect(uriBuilder.toString())
