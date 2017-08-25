@@ -37,17 +37,18 @@ public class Scraper {
     }
 
     private static void getInformationFor(String cookie, String reviewerName) throws URISyntaxException, IOException {
-        System.setProperty("https.proxyHost", "localhost");
-        System.setProperty("https.proxyPort", "8118");
+//        System.setProperty("https.proxyHost", "localhost");
+//        System.setProperty("https.proxyPort", "8118");
         URIBuilder uriBuilder = new URIBuilder("https://www.theeroticreview.com/reviews/searchbyreviewerResults.asp");
         uriBuilder.addParameter("MemberName", reviewerName);
         Document doc = Jsoup.connect(uriBuilder.toString())
                 .header("Origin", "https://www.theeroticreview.com")
+                .header("Host", "www.theeroticreview.com")
                 .header("Upgrade-Insecure-Requests", "1")
                 .header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36")
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
-                .header("Referer", "https://www.theeroticreview.com/memberlaunch/login.asp?dest=/main.asp")
+                .header("Referer", "https://www.theeroticreview.com/reviews/index.asp")
                 .header("Accept-Encoding", "gzip, deflate, br")
                 .header("Accept-Language", "en-US,en;q=0.8")
                 .header("Cookie", cookie)
@@ -68,7 +69,7 @@ public class Scraper {
         Elements elements = doc.select("div.ter-table").get(1).getElementsByClass("tr");
         for (int i = 1; i < elements.size(); i++) {
             Elements rowData = elements.get(i).getAllElements();
-            message.append(rowData.get(1).text() + " | " + rowData.get(3).text() + " | " + rowData.get(4).text() + " | " + rowData.get(5).text() + " | " + reviewerName);
+            message.append(rowData.get(1).text() + " | " + rowData.get(3).text() + " | " + rowData.get(4).text() + " | " + rowData.get(5).text() + " | " + reviewerName + "\n");
         }
         LOGGER.info(message.toString());
     }
