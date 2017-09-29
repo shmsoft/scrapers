@@ -69,7 +69,7 @@ public class Scraper {
         Elements elements = doc.select("div.ter-table").get(1).getElementsByClass("tr");
         for (int i = 1; i < elements.size(); i++) {
             Elements rowData = elements.get(i).getAllElements();
-            message.append(rowData.get(1).text() + " | " + rowData.get(3).text() + " | " + rowData.get(4).text() + " | " + rowData.get(5).text() + " | " + reviewerName + "\n");
+            message.append(rowData.get(1).text() + " | " + rowData.get(3).text() + " | " + rowData.get(4).text() + " | " + rowData.get(5).text() + " | " + reviewerName + rowData.get(1).select("a").attr("href").substring(rowData.get(1).select("a").attr("href").lastIndexOf("-") + 1) + "\n");
         }
         LOGGER.info(message.toString());
     }
