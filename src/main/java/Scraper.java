@@ -21,14 +21,17 @@ public class Scraper {
 
     public static void main(String[] args) {
         long delayInMillis = Long.parseLong(ConfigReader.get("delay"));
+        System.out.println("delayInMillis " + delayInMillis);
         Queue<String> reviewers = Reviewers.getReviewers();
         try {
             LOGGER.info("Name | Total Reviews | Provider Created | Date Submitted | Reviewer's Name");
             //Add cookie from browser - should be refreshed on every call
             String cookie = ConfigReader.get("cookie");
+            boolean useProxy = Boolean.parseBoolean(ConfigReader.get("useproxy"));
+            System.out.println("useProxy = " + useProxy);
             while (!reviewers.isEmpty()) {
                 String reviewerName = reviewers.remove();
-                getInformationFor(cookie, reviewerName);
+                getInformationFor(cookie, reviewerName, useProxy);
                 Thread.sleep(delayInMillis);
             }
         } catch (Exception e) {
@@ -36,9 +39,12 @@ public class Scraper {
         }
     }
 
-    private static void getInformationFor(String cookie, String reviewerName) throws URISyntaxException, IOException {
-//        System.setProperty("https.proxyHost", "localhost");
-//        System.setProperty("https.proxyPort", "8118");
+    private static void getInformationFor(String cookie, String reviewerName, boolean userProxy) throws URISyntaxException, IOException {
+
+        if (userProxy) {
+            System.setProperty("https.proxyHost", "localhost");
+            System.setProperty("https.proxyPort", "8118");
+        }
         URIBuilder uriBuilder = new URIBuilder("https://www.theeroticreview.com/reviews/searchbyreviewerResults.asp");
         uriBuilder.addParameter("MemberName", reviewerName);
         Document doc = Jsoup.connect(uriBuilder.toString())
