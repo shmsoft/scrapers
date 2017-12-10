@@ -2,3 +2,4 @@
 /scrapers.iml
 /.idea
 # Created by .ignore support plugin (hsz.mobi)
+*.DS_*

@@ -1,6 +1,8 @@
 package reader;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Created by hojha on 23/08/17.
@@ -23,14 +25,7 @@ public class Provider {
         }
     }
 
-    public static List<Integer> getProviders() {
-        List<Integer> integerList = new ArrayList<>(providers.size());
-        providers.forEach(p -> {
-            if (p > 7134) {
-                integerList.add(p);
-            }
-        });
-        integerList.sort(Integer::compare);
-        return integerList;
+    public static Set<Integer> getProviders() {
+        return providers;
     }
 }

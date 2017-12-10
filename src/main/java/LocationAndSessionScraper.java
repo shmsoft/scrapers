@@ -6,8 +6,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import reader.Provider;
+import reader.ResultProviders;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -18,40 +20,45 @@ public class LocationAndSessionScraper {
     final static Logger LOGGER = Logger.getLogger(LocationAndSessionScraper.class);
 
     public static void main(String[] args) throws Exception {
-        long delayInMillis = Long.parseLong(ConfigReader.get("delay"));
-        System.out.println("delayInMillis " + delayInMillis);
-        List<Integer> providers = Provider.getProviders();
-        System.out.println("total size = " + providers.size());
+        System.setProperty("https.proxyHost", "localhost");
+        System.setProperty("https.proxyPort", "8118");
+
+        Set<Integer> providers = Provider.getProviders();
+        List<Integer> resultProviders = ResultProviders.getResultProviders();
+
+        System.out.println("Before remove size = " + providers.size());
+        System.out.println("result has " + resultProviders.size() + " providers");
+        for (Integer number : resultProviders) {
+            providers.remove(number);
+        }
+        System.out.println("After remove size = " + providers.size());
+
 
         LOGGER.info("provider_id | city | Session Location");
         String cookie = ConfigReader.get("cookie");
-        boolean useProxy = Boolean.parseBoolean(ConfigReader.get("useproxy"));
-        System.out.println("useProxy = " + useProxy);
 
-        for (int i = 0; i < providers.size(); i++) {
-            Integer provider = providers.get(i);
-            if (provider < 1) {
-                continue;
+        int count = 0;
+        for (Integer provider : providers) {
+            if (count++ == 500) {
+                count = 0;
+                Thread.sleep(30000);
             }
-            try {
-                getInformationFor(cookie, "" + provider, useProxy);
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-                if (ex.getMessage().equals("null")) {
-                    throw new RuntimeException("");
+            new Thread(() -> {
+                if (provider > 0) {
+                    try {
+                        getInformationFor(cookie, "" + provider);
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
+                        if (ex.getMessage().equals("null")) {
+                            throw new RuntimeException("");
+                        }
+                    }
                 }
-            }
-            Thread.sleep(delayInMillis);
+            }).start();
         }
     }
 
-    private static void getInformationFor(String cookie, String provider, boolean userProxy) throws Exception {
-
-        if (userProxy) {
-            System.setProperty("https.proxyHost", "localhost");
-            System.setProperty("https.proxyPort", "8118");
-        }
-
+    private static void getInformationFor(String cookie, String provider) throws Exception {
         URIBuilder uriBuilder = new URIBuilder("https://www.theeroticreview.com/reviews/show.asp");
         uriBuilder.addParameter("id", provider);
         Connection.Response response = Jsoup.connect(uriBuilder.toString())
@@ -68,28 +75,22 @@ public class LocationAndSessionScraper {
                 .header("Upgrade-Insecure-Requests", "1")
                 .timeout(60000)
                 .execute();
-        printInformation(response.parse(), provider, cookie, userProxy);
+        printInformation(response.parse(), provider, cookie);
     }
 
-    private static void printInformation(Document doc, String provider, String cookie, boolean userProxy) throws Exception {
+    private static void printInformation(Document doc, String provider, String cookie) throws Exception {
         if (doc.text().contains("Verification Required")) {
             throw new Exception();
         }
 
-        if (userProxy) {
-            System.setProperty("https.proxyHost", "localhost");
-            System.setProperty("https.proxyPort", "8118");
-        }
-
         String result = provider;
-        if (!doc.select("a.basic-user-link").text().isEmpty()) {
-            result += " | " + doc.select("a.basic-user-link").text();
+        if (doc.select("a.basic-user-link").size() > 0 && !doc.select("a.basic-user-link").get(0).text().isEmpty()) {
+            result += " | " + doc.select("a.basic-user-link").get(0).text();
         }
 
         //doc.select("div.ter-captcha-form").select("div").get(1).attr("data-sitekey")
         if (doc.select("a.td-link").size() > 0) {
             String link = "https://www.theeroticreview.com" + doc.select("a.td-link").get(0).attr("href");
-            Thread.sleep(1000);
             Document childDoc = Jsoup.connect(link)
                     .header("Origin", "https://www.theeroticreview.com")
                     .header("Host", "www.theeroticreview.com")
