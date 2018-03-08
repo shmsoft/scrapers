@@ -91,7 +91,12 @@ public class NysDocScraper {
     }
 
     private static boolean hasNextLink(Document doc) {
-        return Objects.nonNull(doc.select("#content > form"));
+        try {
+            return Objects.nonNull(doc) && Objects.nonNull(doc.select("#content > form"));
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 
     private static void getFormData(Elements element, boolean recurse) throws Exception {
@@ -146,7 +151,7 @@ public class NysDocScraper {
         StringBuilder info = new StringBuilder();
         for (int i = 1; i < 26; i++) {
             String text = document.select("#ii > table:nth-child(4) > tbody > tr:nth-child(" + i + ") > td:nth-child(2)").text();
-            if (text.length() > 1) {
+            if (text.length() > 0) {
                 text = text.substring(0, text.length() - 1);
             }
             info.append(text).append(",");
