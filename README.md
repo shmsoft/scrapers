@@ -18,3 +18,8 @@ Report is append only and should be present inside /tmp/ directory
 under the name 'reviews.log'
 
 
+#nysdoc scraper
+NysDoc Scraper is for scraping data from http://nysdoccslookup.doccs.ny.gov/
+build mvn clean install and use runnable jar as below
+java -cp scrapers-1.0-SNAPSHOT-jar-with-dependencies.jar nyscraper.NysDocScraper a ~/htmls
+where first arg is alphabet to start with and second arg is path where scraped docs are kept.
