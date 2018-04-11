@@ -37,7 +37,7 @@ public class PollyklaasScraper {
         for (int i = 1; i < 16; i++) {
             Document doc = getDoc(URL + i);
             try {
-                saveDoc(doc, "page" + 1);
+                saveDoc(doc, "page" + i);
             } catch (IOException e) {
                 e.printStackTrace();
             }
