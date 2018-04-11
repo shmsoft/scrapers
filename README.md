@@ -32,3 +32,10 @@ where first arg is alphabet to start with and second arg is path where scraped d
 
 ### Code
 nyscraper.NysDocScraper
+
+## PollyklaasScraper
+This class scrapes second column data regarding missing children
+from http://www.pollyklaas.org/
+
+Simply run this class pollyklaas.PollyklaasScraper
+or with one arg pollyklaas.PollyklaasScraper /tmp/htmls/myhtml to override raw data storage
