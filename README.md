@@ -46,4 +46,4 @@ Simply run this class pollyklaas.PollyklaasScraper
 or with one arg pollyklaas.PollyklaasScraper /tmp/htmls/myhtml to override raw data storage
 
 ###Results
-https://s3.console.aws.amazon.com/s3/buckets/pollyklaas
+https://s3.console.aws.amazon.com/s3/buckets/shmsoft/Greg/polyklaas
