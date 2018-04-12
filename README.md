@@ -43,7 +43,8 @@ This class scrapes second column data regarding missing children
 from http://www.pollyklaas.org/
 
 Simply run this class pollyklaas.PollyklaasScraper
-or with one arg pollyklaas.PollyklaasScraper /tmp/htmls/myhtml to override raw data storage
+or with two args
+pollyklaas.PollyklaasScraper outputpath inputpath
 
 ###Results
 https://s3.console.aws.amazon.com/s3/buckets/shmsoft/Greg/polyklaas
