@@ -8,6 +8,7 @@ import (
     "bufio"
     "fmt"
     "os"
+    "os/exec"
 )
 
 func main() {
@@ -16,6 +17,13 @@ func main() {
 
     for scanner.Scan() {
         ucl := scanner.Text()
+
+	cmd := exec.Command("echo 'Shalom' ")
+	err := cmd.Run()
+	if err != nil {
+		// log.Fatal(err)
+		fmt.Printf(err)
+	}
 
         fmt.Println(ucl)
     }
