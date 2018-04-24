@@ -48,3 +48,6 @@ pollyklaas.PollyklaasScraper outputpath inputpath
 
 ###Results
 https://s3.console.aws.amazon.com/s3/buckets/shmsoft/Greg/polyklaas
+
+##Move files
+This class copies files from one s3 and puts files on another s3 one by one and does cleanup
