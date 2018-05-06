@@ -30,5 +30,24 @@ build mvn clean install and use runnable jar as below
 java -cp scrapers-1.0-SNAPSHOT-jar-with-dependencies.jar nyscraper.NysDocScraper a ~/htmls
 where first arg is alphabet to start with and second arg is path where scraped docs are kept.
 
+
 ### Code
 nyscraper.NysDocScraper
+nyscraper.NysDocScraper
+    
+### Results
+https://s3.console.aws.amazon.com/s3/buckets/nysdocs/?region=us-east-1&tab=overview
+    
+## PollyklaasScraper
+This class scrapes second column data regarding missing children
+from http://www.pollyklaas.org/
+
+Simply run this class pollyklaas.PollyklaasScraper
+or with two args
+pollyklaas.PollyklaasScraper outputpath inputpath
+
+###Results
+https://s3.console.aws.amazon.com/s3/buckets/shmsoft/Greg/polyklaas
+
+##Move files
+This class copies files from one s3 and puts files on another s3 one by one and does cleanup
