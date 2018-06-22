@@ -1,3 +1,5 @@
+package locscraper;
+
 import config.ConfigReader;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.log4j.Logger;
