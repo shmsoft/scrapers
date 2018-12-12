@@ -37,10 +37,14 @@ under the name 'reviews.log'
 
     where 
     
-* the irst arg is alphabet letter to start with 
+* the first arg is alphabet letter to start with 
 * the second arg is the path to the directory  where scraped docs are written to
 
-
+Script to do it: ./scrape-letter.sh a &
+When done, upload to s3, like so:
+tar cf html_a.tar output/output_a/
+s3cmd put a.tar s3://shmsoft/Greg/nys/
+s3cmd put scraper_a.log s3://shmsoft/Greg/nys/
 ### Code
 nyscraper.NysDocScraper
 nyscraper.NysDocScraper
