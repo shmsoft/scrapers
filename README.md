@@ -33,7 +33,7 @@ under the name 'reviews.log'
     
 * Run    
     
-    java -cp scrapers-1.0-SNAPSHOT-jar-with-dependencies.jar nyscraper.NysDocScraper a ~/htmls
+    java -cp target/scrapers-1.0-SNAPSHOT-jar-with-dependencies.jar nyscraper.NysDocScraper a output/html
 
     where 
     
