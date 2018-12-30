@@ -38,7 +38,6 @@ under the name 'reviews.log'
 
 ### Code
 nyscraper.NysDocScraper
-nyscraper.NysDocScraper
     
 ### Results
 https://s3.console.aws.amazon.com/s3/buckets/nysdocs/?region=us-east-1&tab=overview
