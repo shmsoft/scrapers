@@ -35,7 +35,7 @@ public class NysDocScraper {
     public static void main(String[] args) throws Exception {
 
         if (args.length < 2) {
-            System.out.println("Please provide two arguments for alphabet to start with and outputdirectory");
+            System.out.println("Please provide two arguments for letter to start with and outputdirectory");
             return;
         }
 

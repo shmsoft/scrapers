@@ -32,17 +32,11 @@ under the name 'reviews.log'
     mvn clean install 
     
 * Run    
+(for letter a, for example)
     
-    java -cp scrapers-1.0-SNAPSHOT-jar-with-dependencies.jar nyscraper.NysDocScraper a ~/htmls
-
-    where 
-    
-* the irst arg is alphabet letter to start with 
-* the second arg is the path to the directory  where scraped docs are written to
-
+./scrape-letter.sh a &
 
 ### Code
-nyscraper.NysDocScraper
 nyscraper.NysDocScraper
     
 ### Results
